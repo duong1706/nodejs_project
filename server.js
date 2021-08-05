@@ -10,7 +10,7 @@ require('dotenv').config()
 
 const connectFun = async()=>{
     try {
-        await mongoose.connect('mongodb://localhost/bai2', {
+        await mongoose.connect('mongodb://localhost/project', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
@@ -29,7 +29,7 @@ app.set('view engine', 'ejs')
 app.use(expressLayouts)
 app.set('layout', 'layouts/layout')
 app.use(express.static('public'))
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: false, limit: '10mb'}))
 
 app.use('/', indexRouter)
 app.use('/category', categoryRouter)

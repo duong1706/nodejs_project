@@ -26,7 +26,8 @@ router.post('/', async(req, res) => {
 })
 
 router.get('/add', async(req, res) => {
-    res.render('categories/add')
+    const category=new categoryModel()
+    res.render('categories/add',{category:category})
 })
 
 router.get('/edit/:id', async(req, res) => {
@@ -39,9 +40,22 @@ router.get('/edit/:id', async(req, res) => {
     }
 })
 
+router.put('/:id', async(req, res) => {
+    try {
+        let category = await categoryModel.findById(req.params.id)
+        category.name = req.body.name
+        await category.save()
+        res.redirect('/category')
+    } catch (error) {
+        console.log(error)
+        res.redirect('/')
+    }
+})
+
 router.delete('/delete/:id', async(req, res) => {
     try {
-        await categoryModel.findByIdAndDelete(req.params.id)
+        const category = await categoryModel.findById(req.params.id)
+        await category.remove()
         res.redirect('/category')
     } catch (error) {
         console.log(error)

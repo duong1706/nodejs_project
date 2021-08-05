@@ -8,6 +8,7 @@
             <th>Price</th>
             <th>Quantity</th>
             <th>Category</th>
+            <th>Image</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -25,7 +26,8 @@
                     <%}
                     %>
                 </td>
-                <td><a href="/category/edit/<%= pro._id %>" class="btn btn-warning">Edit</a></td>
+                <td><img src="<%= pro.imageSrc %>" alt="<%= pro.name %>" width="70px"></td>
+                <td><a href="/product/edit/<%= pro._id %>" class="btn btn-warning">Edit</a></td>
                 <td> <%- include('../part/deleteForm',{url:`/product/delete/${pro._id}`}) %></td>
             </tr>
         <%})

@@ -19,8 +19,9 @@ router.get('/add',async(req,res)=>{
 })
 router.get('/edit/:id',async(req,res)=>{
     try{
-        const category=await categoryModel.findById(req.params.id)
-        res.render('categories/edit',{category:category})
+        const product = await productModel.findById(req.params.id)
+        const categories=await categoryModel.find()
+        res.render('products/edit',{product:product, categories:categories})
     }catch(e){
         console.log(e)
         res.redirect('/')
@@ -36,6 +37,13 @@ router.post('/',async(req,res)=>{
             price:req.body.price,
             category:req.body.category,
         })
+
+        if(req.body.image != null && req.body.image != ''){
+            const image = JSON.parse(req.body.image)
+            productNew.imageType = image.type
+            productNew.imageData = new Buffer.from(image.data, 'base64')
+        }
+
         await productNew.save()
         res.redirect('/product')
     }catch(e){
@@ -43,6 +51,29 @@ router.post('/',async(req,res)=>{
         res.redirect('/')
     }
 })
+
+router.put('/:id', async(req, res) => {
+    try {
+        let product= await productModel.findById(req.params.id)
+        product.name = req.body.name
+        product.info = req.body.info
+        product.quantity = req.body.quantity
+        product.price = req.body.price
+        product.category = req.body.category
+
+        if(req.body.image != null && req.body.image != ''){
+            const image = JSON.parse(req.body.image)
+            product.imageType = image.type
+            product.imageData = new Buffer.from(image.data, 'base64')
+        }
+
+        await product.save()
+        res.redirect('/product')
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 router.delete('/delete/:id',async(req,res)=>{
     try{
         const productDelete=await productModel.findById(req.params.id)
