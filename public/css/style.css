@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .footer-main{
     background: #222f3e;
     color: #fff;
@@ -9,4 +14,16 @@
 }
 .main{
     min-height: 80vh;
+}
+
+.product-card{
+    width: 100%;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.img img{
+    width: 90%;
+    height: 250px;
+    object-fit: cover;
 }
