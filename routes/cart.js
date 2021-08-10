@@ -28,7 +28,7 @@ router.get('/add/:id', async (req, res) => {
         const cart = new cartModel(items_old, price_old)
         cart.add(product, id, product.imageSrc)
         req.session.cart = cart
-        res.redirect('/cart')
+        res.redirect('/')
     } catch (error) {
         res.redirect('/')
     }
@@ -45,13 +45,13 @@ router.delete('/delete/:id', async (req, res) => {
         const cart = new cartModel(items_old, price_old)
         cart.delete(req.params.id)
         req.session.cart = cart
-        res.redirect('/cart')
+        res.send('Delete Successfully')
     } catch (error) {
-        res.redirect('/')
+        res.send('Delete Failed')
     }
 })
 
-router.get('/reduce/:id', (req, res) => {
+router.put('/reduce/:id', (req, res) => {
     try {
         let items_old = []
         let price_old = 0
@@ -62,13 +62,13 @@ router.get('/reduce/:id', (req, res) => {
         const cart = new cartModel(items_old, price_old)
         cart.reduce(req.params.id)
         req.session.cart = cart
-        res.redirect('/cart')
+        res.send('Update Successfully')
     } catch (error) {
-        res.redirect('/')
+        res.send('Update Failed')
     }
 })
 
-router.get('/increase/:id', (req, res) => {
+router.put('/increase/:id', (req, res) => {
     try {
         let items_old = []
         let price_old = 0
@@ -79,9 +79,10 @@ router.get('/increase/:id', (req, res) => {
         const cart = new cartModel(items_old, price_old)
         cart.increase(req.params.id)
         req.session.cart = cart
-        res.redirect('/cart')
+        res.send('Update Successfully')
+        //res.redirect('/cart')
     } catch (error) {
-        res.redirect('/')
+        res.send('Update Failed')
     }
 })
 

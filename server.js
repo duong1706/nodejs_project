@@ -39,6 +39,10 @@ app.use(session({
     saveUninitialized: true,
     cookie:  { maxAge: 60*60*1000}
   }))
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next()
+})
 
 app.use('/', indexRouter)
 app.use('/category', categoryRouter)

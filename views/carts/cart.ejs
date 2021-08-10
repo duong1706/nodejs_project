@@ -10,18 +10,26 @@
         <% if (carts.items) {
             carts.items.map(x => { 
         %>
-        <tr>
+        <tr id="item_<%= x.id %>">
             <th><%= x.item.name %></th>
             <th><%= x.item.price %></th>
             <th><img src="<%= x.imageSrc %>" alt="<%= x.item.name %> " width="75px"> </th>
             <th class="d-flex">
-                <a href="/cart/reduce/<%= x.id %>" class="mx-3 btn btn-light">-</a>
-                <%= x.qty %> 
-                <a href="/cart/increase/<%= x.id %>" class="mx-3 btn btn-light">+</a>
+                <form action="/cart/reduce/<%= x.id %>?_method=put" method="post" data-id="<%= x.id %>/reduce"class="changeCart">
+                    <input type="submit" value="-" class="btn btn-light mx-3"/>    
+                </form>
+                <span id="<%= x.id %>"><span id="qty<%= x.id %>"><%= x.qty %></span></span>
+                <form action="/cart/increase/<%= x.id %>?_method=put" method="post" data-id="<%= x.id %>/increase" class="changeCart">
+                    <input type="submit" value="+" class="btn btn-light mx-3"/>    
+                </form>
+                </th>
+            <th>
+                <form action="/cart/delete/<%= x.id %>?_method=delete" method="post" data-id="<%= x.id %>" class="deleteCart">
+                    <input type="submit" value="Delete" class="btn btn-danger"/>    
+                </form>
             </th>
-            <th><%- include('../part/deleteForm', {url: `/cart/delete/${x.id}`}) %> </th>
         </tr>
         <% })} %>
     </table>
-    <h1>Total: <%= carts.priceTotal %> </h1>
+    <h1 id="total1"><span id="total2">Total: <%= carts.priceTotal %></span></h1>
 </div>
